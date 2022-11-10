@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", "serif";
+  font-size: 16px;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Login */
+.login {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  height: 100vh;
+  background: url("./Images/background.jpg") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.login #left-section {
+  width: 100%;
+  height: 100vh;
+  /* background: url("./Images/background.jpg") no-repeat center center;
+  background-size: 100% 100%; */
+}
+
+.login #right-section {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  padding: 2rem;
+  margin-top: 5rem;
+}
+.login #right-section form {
+  padding: 1rem;
+  border-radius: 10px;
+  width: 350px;
+}
+.login #right-section h2 {
+  margin-bottom: 2rem;
+}
+
+.form-details {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.form-details label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-details input {
+  width: 100%;
+  display: block;
+  padding: 0.35rem 1rem;
+  font-size: 1rem;
+  outline: 0;
+  border: 0;
+  border: 1px solid #333;
+  border-radius: 4px;
+}
+
+.form-details input.error {
+  border: crimson 1px solid;
+}
+#right-section form button {
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  display: block;
+  margin: 1.5rem 0;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  border-radius: 3px;
+  background: #333;
+  color: #fff;
+}
+
+p.error {
+  color: crimson;
+  font-size: 0.85rem;
+  margin: 0.4rem 0;
+}
