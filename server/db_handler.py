@@ -1,7 +1,7 @@
 import ibm_db
 
 class DBHandler:
-    dsn_hostname = "125f9f61-9715-46f9-9399-c8177b21803b.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud" # e.g.: "54a2f15b-5c0f-46df-8954-7e38e612c2bd.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud"
+    dsn_hostname = "125f9f61-9715-46f9-9399-c8177b21803b.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud" 
     dsn_uid = "ypp79133"       
     dsn_pwd = "kBmzEPu5OWzeHXLH"      
 
@@ -50,13 +50,15 @@ class DBHandler:
         return result
     
     def get_all_rows(self,table_name):
+        
         if not table_name or len(table_name) == 0:
             print('Enter a table name!')
-            return
+            return []
+
         sql_stmt = ibm_db.exec_immediate(self.conn, f"select * from {table_name}")
         row = ibm_db.fetch_assoc(sql_stmt)
         result = []
         while row:
             result.append(row)
-            row = ibm_db.fetch_tuple(sql_stmt)
+            row = ibm_db.fetch_assoc(sql_stmt)
         return result

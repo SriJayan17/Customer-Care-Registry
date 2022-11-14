@@ -44,15 +44,17 @@
 # # else:
 # #     print('Not what you think!')
 from db_handler import DBHandler
+print("Inside test")
 handler = DBHandler()
-handler.insert_row('users_table',
-                    {
-                        'name':'Ben 10',
-                        'email':'alien@gmail.com',
-                        'mobile':'123456',
-                        'status':2
-                    }
-                )
+# handler.insert_row('users_table',
+                #     {
+                #         'name':'Ben 10',
+                #         'email':'alien@gmail.com',
+                #         'mobile':'123456',
+                #         'status':2
+                #     }
+                # )
+            
 for row in handler.get_all_rows('users_table'):
     print(row)
 

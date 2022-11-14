@@ -1,25 +1,12 @@
 from flask import Flask, jsonify, request
-# from flask_restful import Api, Resource
 from flask_cors import CORS
+from db_handler import DBHandler
 
 app = Flask("Customer care Registry")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'application/json'
 
-users = [
-    {
-        "name": "Sri Jayan",
-        "email": "sjayan@gmail.com",
-        "password": "sj2002",
-        "mno": "1234567890"
-    },
-    {
-        "name": "Rajesh",
-        "email": "rajesh@gmail.com",
-        "password": "rj2002",
-        "mno": "1234567890"
-    },
-]
+Database = DBHandler()
 
 @app.route("/greet", methods=["GET"])
 def greeting():
@@ -32,8 +19,18 @@ def isEmpty(field):
 
     return False
 
+def getUsers():
+    rows = Database.get_all_rows("users_table")
+    users = []
+    for user in rows:
+        users.append({"name":user["NAME"],"email":user["EMAIL"],"password":user["PASSWORD"],
+                      "mno":user["MOBILE"]})
+    
+    return users
+
 @app.route("/register", methods=["POST"])
 def register():
+
     body = request.get_json()
     
     name = body["name"]
@@ -47,6 +44,8 @@ def register():
         "status": 200
     }
     
+    users = getUsers()
+
     if(isEmpty(name)):
         response["error"]["name"] = "Full Name is rqeuired"
         response["status"] = 501
@@ -80,8 +79,13 @@ def register():
         response["status"] = 501
         return jsonify(response)
 
-    users.append({"name":name, "email":email, "password":password, "mno":mno})
-    response["message"] = "Account created successfully"
+    inserted = Database.insert_row("users_table",{"NAME":name, "EMAIL":email, "PASSWORD":password, "MOBILE":mno,"STATUS":2})
+    if inserted:
+        response["message"] = "Account created successfully"
+    else:
+        response["status"] = 501
+        response["error"]["email"] = "Something went wrong!"
+
     return jsonify(response)
 
 
@@ -96,6 +100,7 @@ def login():
         "status" : 200
     }
     
+    users = getUsers()
 
     if(isEmpty(email)):
         response["status"] = 501
