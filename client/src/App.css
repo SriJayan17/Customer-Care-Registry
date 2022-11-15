@@ -125,7 +125,7 @@ p.error {
   cursor: pointer;
 }
 
-.container {
+.t-container {
   background: #ccc;
   width: 100%;
   height: calc(100vh - 70px);
@@ -133,12 +133,59 @@ p.error {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
-.container .table-container {
+.t-container .view-msg,
+.t-container .complaint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
+  width: 350px;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.t-container .complaint {
+  width: 500px;
+}
+
+.t-container .complaint h3 {
+  margin-bottom: 1rem;
+}
+
+.t-container .complaint button {
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  display: block;
+  margin: 1.5rem 0;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  border-radius: 3px;
+  background: #333;
+  color: #fff;
+}
+
+.t-container .view-msg i,
+.t-container .complaint i {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+}
+
+.t-container .table-container {
   width: 85%;
   margin: 4rem 0 0 0;
-  background: #f2f2f2;
+  background: #fff;
   padding: 2rem;
   border-radius: 1.5rem;
 }
@@ -150,12 +197,16 @@ p.error {
   align-items: center;
 }
 
+.table-container .header .new-complaint {
+  cursor: pointer;
+}
+
 .table-container .header h2 {
   margin-bottom: 0.55rem;
 }
 
 .table-container .header p {
-  color: rgb(122, 121, 121);
+  color: rgb(161, 160, 160);
 }
 .table-container .header button {
   padding: 0.5rem 1rem;
@@ -177,31 +228,82 @@ p.error {
   font-size: 0.9rem;
 }
 
+.table-container table tr {
+  border-radius: 1rem;
+}
+
 .table-container table td,
 .table-container table th {
   padding: 8px;
+}
+
+.table-container table td {
+  color: #000;
+  font-weight: 500;
 }
 
 .table-container table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.table-container table tr:hover {
-  background-color: #ddd;
+.table-container table tbody tr:hover {
+  cursor: pointer;
+  background-color: rgb(222, 222, 222);
 }
 
-.table-container table tr th:last-of-type {
+.table-container table tr th:nth-of-type(4),
+.table-container table tr th:nth-of-type(5),
+.table-container table tr th:nth-of-type(6) {
   text-align: center;
 }
 
-.table-container table tr td:last-of-type {
+.table-container table tr td:nth-of-type(4),
+.table-container table tr td:nth-of-type(5),
+.table-container table tr td:nth-of-type(6) {
   text-align: center;
+}
+
+.table-container table tbody tr td:first-child {
+  border-radius: 0.3rem 0 0 0.3rem;
+}
+
+.table-container table tbody tr td:last-child {
+  border-radius: 0 0.3rem 0.3rem 0;
 }
 
 .table-container table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #0984e3;
-  color: white;
+  color: rgb(161, 160, 160);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.table-container table tr td button {
+  border: 0;
+  outline: 0;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.75rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.table-container table tr td .status-a {
+  color: #2a9d8f;
+  border: 1px solid #2a9d8f;
+  background-color: #c9f6f1;
+}
+
+.table-container table tr td .status-n {
+  color: #dc143c;
+  border: 1px solid #dc143c;
+  background-color: #f7cdd6;
+}
+
+.table-container table tr td .msg {
+  color: #f4a261;
+  border: 1px solid #f4a261;
+  background-color: #f9ebdf;
+  cursor: pointer;
 }
