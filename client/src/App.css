@@ -93,3 +93,115 @@ p.error {
   font-size: 0.85rem;
   margin: 0.4rem 0;
 }
+
+.navbar {
+  height: 70px;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  color: #fff;
+}
+
+.navbar .details {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .details p {
+  padding: 0 1.5rem;
+}
+
+.navbar .details button {
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  background: #fff;
+  color: #333;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container {
+  background: #ccc;
+  width: 100%;
+  height: calc(100vh - 70px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container .table-container {
+  width: 85%;
+  margin: 4rem 0 0 0;
+  background: #f2f2f2;
+  padding: 2rem;
+  border-radius: 1.5rem;
+}
+
+.table-container .header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-container .header h2 {
+  margin-bottom: 0.55rem;
+}
+
+.table-container .header p {
+  color: rgb(122, 121, 121);
+}
+.table-container .header button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  border-radius: 3px;
+  background: #333;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.table-container .header button i {
+  margin-right: 0.5rem;
+}
+
+.table-container table {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.table-container table td,
+.table-container table th {
+  padding: 8px;
+}
+
+.table-container table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-container table tr:hover {
+  background-color: #ddd;
+}
+
+.table-container table tr th:last-of-type {
+  text-align: center;
+}
+
+.table-container table tr td:last-of-type {
+  text-align: center;
+}
+
+.table-container table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0984e3;
+  color: white;
+}
