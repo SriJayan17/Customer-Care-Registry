@@ -138,17 +138,30 @@ p.error {
   left: 0;
 }
 
-.t-container .view-msg,
-.t-container .complaint {
+.bdrop {
+  background: rgb(104, 103, 103);
+}
+
+.t-container .wrapper {
   position: absolute;
-  top: 50%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(90, 89, 89, 0.436);
+}
+.t-container .wrapper .view-msg,
+.t-container .wrapper .complaint {
+  position: absolute;
+  top: 30%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -30%);
   background-color: #fff;
-  box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
+  box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.5);
   width: 350px;
   padding: 2rem;
   border-radius: 10px;
+  z-index: 10;
 }
 
 .t-container .complaint {
@@ -243,7 +256,7 @@ p.error {
 }
 
 .table-container table tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f1f1f1;
 }
 
 .table-container table tbody tr:hover {
@@ -293,12 +306,14 @@ p.error {
   color: #2a9d8f;
   border: 1px solid #2a9d8f;
   background-color: #c9f6f1;
+  font-weight: 550;
 }
 
 .table-container table tr td .status-n {
   color: #dc143c;
   border: 1px solid #dc143c;
   background-color: #f7cdd6;
+  font-weight: 550;
 }
 
 .table-container table tr td .msg {
@@ -306,4 +321,5 @@ p.error {
   border: 1px solid #f4a261;
   background-color: #f9ebdf;
   cursor: pointer;
+  font-weight: 550;
 }

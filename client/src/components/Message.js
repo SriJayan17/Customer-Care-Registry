@@ -1,12 +1,19 @@
-import React from 'react'
+import React from "react";
 
-const Message = ({handleShow}) => {
+const Message = ({ handleShow }) => {
   return (
-    <div className='view-msg'>
-        <p>No message from the Agent! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi consectetur neque ut magni ea accusantium odit aliquam suscipit consequatur perspiciatis quod vel corporis, at cupiditate ratione atque possimus laborum aspernatur.</p>
+    <div className="wrapper">
+      <div className="view-msg">
+        <p>
+          No message from the Agent! Lorem, ipsum dolor sit amet consectetur
+          adipisicing elit. Eligendi consectetur neque ut magni ea accusantium
+          odit aliquam suscipit consequatur perspiciatis quod vel corporis, at
+          cupiditate ratione atque possimus laborum aspernatur.
+        </p>
         <i className="fas fa-times" onClick={handleShow}></i>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Message
+export default Message;

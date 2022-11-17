@@ -62,3 +62,19 @@ class DBHandler:
             result.append(row)
             row = ibm_db.fetch_assoc(sql_stmt)
         return result
+    
+    def get_column(self, table_name, column_name,condition):
+
+        if not table_name or len(table_name) == 0:
+            print('Enter a table name!')
+            return None
+
+        condition_statement = ""
+        for key in condition:
+            condition_statement += f"{key} = {condition[key]} AND"
+        condition_statement = condition_statement[:-3]
+
+        sql_stmt = ibm_db.exec_immediate(self.conn, f"select {column_name} from {table_name} where {condition_statement}")
+
+        return ibm_db.fetch_assoc(sql_stmt)
+        

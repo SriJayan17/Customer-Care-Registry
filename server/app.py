@@ -126,5 +126,32 @@ def login():
     return jsonify(response)
 
 
+@app.route("/add-complaint", methods=["POST"])
+def addComplaint():
+    body = request.get_json()
+    subject = body["subject"]
+    message = body["message"]
+    email = body["email"]
+    response = {
+        "status": 200,
+        "error": dict({"subject": "", "message": ""})
+    }
+    
+    if(isEmpty(subject)):
+        response["status"] = 501
+        response["error"]["subject"] = "Subject is required"
+    if(isEmpty(message)):
+        response["status"] = 501
+        response["error"]["message"] = "Message is required"
+    
+    if(not isEmpty(subject) and not isEmpty(message)):
+        userId = Database.get_column("complaints","USER_ID",{"email":email})
+        inserted = Database.insert_row("complaints",{"":"","SUBJECT":subject, "CONTENT":message})
+        if inserted:
+            response["message"] = "Complaint added successfully"
+        else:
+            response["status"] = 501
+            response["error"]["subject"] = "Something went wrong!"
+    return jsonify(response)
 
 app.run(port=9090)
