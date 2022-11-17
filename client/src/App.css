@@ -323,3 +323,32 @@ p.error {
   cursor: pointer;
   font-weight: 550;
 }
+
+.popup{
+  position:absolute;
+  top:15%;
+  left:auto;
+  padding:2rem 2.5rem;
+  color:#fff;
+  background: red;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.popup i{
+  position: absolute;
+  top:1rem;
+  right:1rem;
+  cursor: pointer;
+}
+.popup p{
+  text-align: center;
+}
+
+.popup.error{
+  background: crimson;
+}
+
+.popup.success{
+  background: rgb(21, 200, 21);
+}

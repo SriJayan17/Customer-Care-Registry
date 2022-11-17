@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from db_handler import DBHandler
+from datetime import date
 
 app = Flask("Customer care Registry")
 cors = CORS(app)
@@ -47,16 +48,16 @@ def register():
     users = getUsers()
 
     if(isEmpty(name)):
-        response["error"]["name"] = "Full Name is rqeuired"
+        response["error"]["name"] = "Full Name is required"
         response["status"] = 501
     if(isEmpty(email)):
-        response["error"]["email"] = "Email is rqeuired"
+        response["error"]["email"] = "Email is required"
         response["status"] = 501
     if(isEmpty(password)):
-        response["error"]["password"] = "Password is rqeuired"
+        response["error"]["password"] = "Password is required"
         response["status"] = 501
     if(isEmpty(mno)):
-        response["error"]["mno"] = "Mobile Number is rqeuired"
+        response["error"]["mno"] = "Mobile Number is required"
         response["status"] = 501
 
     if response["status"] == 501:
@@ -130,8 +131,8 @@ def login():
 def addComplaint():
     body = request.get_json()
     subject = body["subject"]
-    message = body["message"]
-    email = body["email"]
+    message = body["content"]
+    userId = body["userId"]
     response = {
         "status": 200,
         "error": dict({"subject": "", "message": ""})
@@ -142,16 +143,39 @@ def addComplaint():
         response["error"]["subject"] = "Subject is required"
     if(isEmpty(message)):
         response["status"] = 501
-        response["error"]["message"] = "Message is required"
+        response["error"]["msg"] = "Message is required"
     
     if(not isEmpty(subject) and not isEmpty(message)):
-        userId = Database.get_column("complaints","USER_ID",{"email":email})
-        inserted = Database.insert_row("complaints",{"":"","SUBJECT":subject, "CONTENT":message})
+        # userId = Database.get_column("users_table","USER_ID",{"EMAIL":email})
+        today = date.today().isoformat()
+        print(today," end ")
+        inserted = Database.insert_row("complaints",{"USER_ID":userId,"SUBJECT":subject, "CONTENT":message,"DATE":today,"STATUS":False})
         if inserted:
             response["message"] = "Complaint added successfully"
         else:
             response["status"] = 501
-            response["error"]["subject"] = "Something went wrong!"
+            response["error"]["database"] = "Something went wrong!"
     return jsonify(response)
+
+@app.route("/get-complaints", methods=["POST"])
+def getComplaints():
+    body = request.get_json()
+    userId = body["userId"]
+
+    complaints = Database.get_all_rows("complaints")
+    userComplaints = []
+
+    for complaint in complaints:
+        if complaint["USER_ID"]==userId:
+            userComplaints.append({
+                "subject":complaint["SUBJECT"],
+                "content":complaint["CONTENT"],
+                "date":complaint["DATE"],
+                "agent":complaint["AGENT_ID"],
+                "status":complaint["STATUS"],
+                "feedback":complaint["FEEDBACK"]
+            })
+
+    return jsonify(userComplaints)
 
 app.run(port=9090)

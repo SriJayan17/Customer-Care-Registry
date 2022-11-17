@@ -71,10 +71,10 @@ class DBHandler:
 
         condition_statement = ""
         for key in condition:
-            condition_statement += f"{key} = {condition[key]} AND"
-        condition_statement = condition_statement[:-3]
-
+            condition_statement += f"{key} = '{condition[key]}' AND"
+        condition_statement = condition_statement[:-4]
+        print(condition_statement)
         sql_stmt = ibm_db.exec_immediate(self.conn, f"select {column_name} from {table_name} where {condition_statement}")
 
-        return ibm_db.fetch_assoc(sql_stmt)
+        return ibm_db.fetch_tuple(sql_stmt)[0]
         

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Complaint from "./Complaint";
 import Message from "./Message";
+import Popup from "./Popup";
 
 const initialData = {
   subject: "",
@@ -14,7 +15,25 @@ const Table = () => {
   const [addComplaint, setAddComplaint] = useState(false);
   const [data, setData] = useState(initialData);
   const [error, setError] = useState(initialData);
-
+  const [tableData,setTableData] = useState([]);
+  const getComplaints = async() => {
+    const res = await fetch("http://localhost:9090/get-complaints",{
+      method:"POST",
+      mode: "cors",
+      headers:{
+        "content/type":"application/json"
+      },
+      body:JSON.stringify({
+        userId:localStorage.getItem("user").userId,
+      })
+    });
+    const response = await res.json();
+    console.log(response);
+    setTableData(response);
+  }
+  useEffect(()=>{
+    getComplaints();
+  }, []);
   const changeHandler = (e) => {
     setError({ ...error, [e.target.name]: "" });
     setData({ ...data, [e.target.name]: e.target.value });
@@ -28,14 +47,14 @@ const Table = () => {
 
   const addComplaintHandler = async (e) => {
     e.preventDefault();
-    const email = JSON.parse(localStorage.getItem("user")).email;
+    const userId = JSON.parse(localStorage.getItem("user")).userId;
     const complaint = {
-      email,
+      userId,
       subject: data.subject,
       content: data.msg,
     };
     console.log(complaint);
-    const res = await fetch("http://localhost:9090/complaint", {
+    const res = await fetch("http://localhost:9090/add-complaint", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -54,7 +73,7 @@ const Table = () => {
       setTimeout(() => {
         setPopup(false);
       }, 3000);
-    } else {
+    } else if(response["error"]["database"]){
       setAddComplaint(false);
       setData(initialData);
       setSubmitError(true);
@@ -62,8 +81,16 @@ const Table = () => {
       setTimeout(() => {
         setPopup(false);
       }, 3000);
+    }else {
+      setError(error=>{
+        return {...error,...response["error"]}
+      });
     }
   };
+
+  const popupHandler = (e)=>{
+    setPopup(false);
+  }
 
   return (
     <div className={show ? "t-container bdrop" : "t-container"}>
@@ -80,9 +107,10 @@ const Table = () => {
       {popup && (
         <Popup
           content={
-            submitError ? "Sorry! Something went wront" : "Added successfully"
+            submitError ? "Sorry! Something went wrong" : "Complaint Added successfully"
           }
-          error={submitError}
+          type={submitError?"error":"success"}
+          popupHandler = {popupHandler}
         />
       )}
       <div className="table-container">
@@ -108,21 +136,26 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Thsh</td>
-              <td>12/09/2002</td>
-              <td>jshs</td>
-              <td>
-                <button className="status-a">Assigned</button>
-              </td>
-              <td>
-                <button className="msg" onClick={handleShow}>
-                  View
-                </button>
-              </td>
-            </tr>
-            <tr>
+            {tableData.map((complaint,index)=>{
+              return (
+                <tr>
+                  <td>{index}</td>
+                  <td>{complaint["subject"]}</td>
+                  <td>{complaint["date"]}</td>
+                  <td>{complaint["agent"]}</td>
+                  <td>
+                    <button className="status-a">{complaint["status"]==0?"Under Processing":"Completed"}</button>
+                  </td>
+                  <td>
+                    <button className="msg" onClick={handleShow}>
+                      View
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
+            
+            {/* <tr>
               <td>2</td>
               <td>Thsh</td>
               <td>12/09/2002</td>
@@ -163,7 +196,7 @@ const Table = () => {
                   View
                 </button>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
