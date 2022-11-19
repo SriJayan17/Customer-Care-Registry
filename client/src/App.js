@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import DashBoard from "./components/Dashboard";
+import AdminDashboard from "./components/AdminDashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<DashBoard />} />
+      <Route path="/admin" element={<AdminDashboard />} />
     </Route>
   )
 );

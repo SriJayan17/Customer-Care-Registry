@@ -77,4 +77,21 @@ class DBHandler:
         sql_stmt = ibm_db.exec_immediate(self.conn, f"select {column_name} from {table_name} where {condition_statement}")
 
         return ibm_db.fetch_tuple(sql_stmt)[0]
-        
+    
+    def update_column(self, table_name, column_name,value,condition):
+
+        if not table_name or len(table_name) == 0:
+            print('Enter a table name!')
+            return None
+
+        condition_statement = ""
+        for key in condition:
+            condition_statement += f"{key} = '{condition[key]}' AND"
+        condition_statement = condition_statement[:-4]
+        print(condition_statement)
+        sql_stmt = ibm_db.exec_immediate(self.conn, f"update {table_name} set {column_name}={value} where {condition_statement}")
+
+        result =  ibm_db.commit(self.conn)
+
+        return result
+    

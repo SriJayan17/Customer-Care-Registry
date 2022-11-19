@@ -171,49 +171,6 @@ const Table = () => {
                 </tr>
               )
             })}
-            
-            {/* <tr>
-              <td>2</td>
-              <td>Thsh</td>
-              <td>12/09/2002</td>
-              <td>jshs</td>
-              <td>
-                <button className="status-n">Not Assigned</button>
-              </td>
-              <td>
-                <button className="msg" onClick={handleShow}>
-                  View
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Thsh</td>
-              <td>12/09/2002</td>
-              <td>jshs</td>
-              <td>
-                <button className="status-a">Assigned</button>
-              </td>
-              <td>
-                <button className="msg" onClick={handleShow}>
-                  View
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Thsh</td>
-              <td>12/09/2002</td>
-              <td>jshs</td>
-              <td>
-                <button className="status-n">Not Assigned</button>
-              </td>
-              <td>
-                <button className="msg" onClick={handleShow}>
-                  View
-                </button>
-              </td>
-            </tr> */}
           </tbody>
         </table>
       </div>

@@ -18,6 +18,8 @@ const Input = ({ features }) => {
       {error && <p className="error">{error}</p>}
     </div>
   );
-};
+}
+
+
 
 export default Input;

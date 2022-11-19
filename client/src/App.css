@@ -353,6 +353,18 @@ p.error {
   background: crimson;
 }
 
-.popup.success{
+.popup.success {
   background: rgb(21, 200, 21);
+}
+
+.t-container #agent {
+  outline: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.2rem;
+  width: 280px;
+}
+
+.t-container .assignForm button {
+  background-color: #2a9d8f;
 }

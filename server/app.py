@@ -146,7 +146,6 @@ def addComplaint():
         response["error"]["msg"] = "Message is required"
     
     if(not isEmpty(subject) and not isEmpty(message)):
-        # userId = Database.get_column("users_table","USER_ID",{"EMAIL":email})
         today = str(date.today())
         print(today," end ")
         inserted = Database.insert_row("complaints",{"USER_ID":userId,"SUBJECT":subject, "CONTENT":message,"DATE":today,"STATUS":False})
@@ -177,5 +176,58 @@ def getComplaints():
 
     print(userComplaints)
     return jsonify(userComplaints)
+
+@app.route("/getUnresolvedComplaints", methods=["GET"])
+def getUnresolvedComplaints():
+    complaints = Database.get_all_rows("complaints")
+    userComplaints = []
+    
+    for complaint in complaints:
+        if not complaint["STATUS"]:
+            comp = {
+                "id":complaint["COMP_ID"],
+                "userName": Database.get_column("users_table","NAME",{"USER_ID":complaint["USER_ID"]}),
+                "userId":complaint["USER_ID"],
+                "subject":complaint["SUBJECT"],
+                "content":complaint["CONTENT"],
+                "agent":complaint["AGENT_ID"],
+                "date":complaint["DATE"],
+                "status":complaint["STATUS"],
+                "feedback":complaint["AGENT_FEEDBACK"]
+            }
+            if complaint["AGENT_ID"]:
+                comp["agentName"] = Database.get_column("users_table","NAME",{"USER_ID":complaint["AGENT_ID"]})
+            userComplaints.append(comp)
+            
+
+    print(userComplaints)
+    return jsonify(userComplaints)
+
+@app.route("/getAgents", methods=["GET"])
+def getAgents():
+    users = Database.get_all_rows("users_table")
+    agents = []
+    for user in users:
+        if user["STATUS"]==2:
+            agents.append({"id":user["USER_ID"],"name":user["NAME"]})
+
+    return jsonify(agents)
+
+@app.route("/assignAgent", methods=["POST"])
+def assignAgent():
+    body = request.get_json()
+    compId = body["compId"]
+    agentId = body["agentId"]
+
+    result = Database.update_column("complaints","AGENT_ID",agentId,{"COMP_ID":compId})
+    print(result)
+    response = {
+        "status":200
+    }
+    if not result:
+        response["status"]:500
+    
+    return jsonify(response)
+    
 
 app.run(port=9090)
