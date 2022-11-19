@@ -147,7 +147,7 @@ def addComplaint():
     
     if(not isEmpty(subject) and not isEmpty(message)):
         # userId = Database.get_column("users_table","USER_ID",{"EMAIL":email})
-        today = date.today().isoformat()
+        today = str(date.today())
         print(today," end ")
         inserted = Database.insert_row("complaints",{"USER_ID":userId,"SUBJECT":subject, "CONTENT":message,"DATE":today,"STATUS":False})
         if inserted:
@@ -157,11 +157,10 @@ def addComplaint():
             response["error"]["database"] = "Something went wrong!"
     return jsonify(response)
 
-@app.route("/get-complaints", methods=["POST"])
+@app.route("/getcomplaints", methods=["POST"])
 def getComplaints():
     body = request.get_json()
     userId = body["userId"]
-
     complaints = Database.get_all_rows("complaints")
     userComplaints = []
 
@@ -173,9 +172,10 @@ def getComplaints():
                 "date":complaint["DATE"],
                 "agent":complaint["AGENT_ID"],
                 "status":complaint["STATUS"],
-                "feedback":complaint["FEEDBACK"]
+                "feedback":complaint["AGENT_FEEDBACK"]
             })
 
+    print(userComplaints)
     return jsonify(userComplaints)
 
 app.run(port=9090)

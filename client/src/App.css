@@ -266,13 +266,15 @@ p.error {
 
 .table-container table tr th:nth-of-type(4),
 .table-container table tr th:nth-of-type(5),
-.table-container table tr th:nth-of-type(6) {
+.table-container table tr th:nth-of-type(6),
+.table-container table tr th:nth-of-type(7) {
   text-align: center;
 }
 
 .table-container table tr td:nth-of-type(4),
 .table-container table tr td:nth-of-type(5),
-.table-container table tr td:nth-of-type(6) {
+.table-container table tr td:nth-of-type(6),
+.table-container table tr td:nth-of-type(7){
   text-align: center;
 }
 
@@ -310,9 +312,11 @@ p.error {
 }
 
 .table-container table tr td .status-n {
-  color: #dc143c;
-  border: 1px solid #dc143c;
-  background-color: #f7cdd6;
+  /* color: #dc143c;
+  border: 1px solid #dc143c; */
+  color: #efa825;
+  border: 1px solid #efa825;
+  background-color: #f6e6ca;
   font-weight: 550;
 }
 

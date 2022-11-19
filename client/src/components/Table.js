@@ -16,24 +16,30 @@ const Table = () => {
   const [data, setData] = useState(initialData);
   const [error, setError] = useState(initialData);
   const [tableData,setTableData] = useState([]);
+  const [message, setMessage] = useState("");
+
   const getComplaints = async() => {
-    const res = await fetch("http://localhost:9090/get-complaints",{
+    const userId = JSON.parse(localStorage.getItem("user")).userId;
+    console.log(userId);
+    const res = await fetch("http://localhost:9090/getcomplaints",{
       method:"POST",
       mode: "cors",
       headers:{
-        "content/type":"application/json"
+        "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        userId:localStorage.getItem("user").userId,
+        userId,
       })
     });
     const response = await res.json();
     console.log(response);
     setTableData(response);
   }
+
   useEffect(()=>{
     getComplaints();
   }, []);
+
   const changeHandler = (e) => {
     setError({ ...error, [e.target.name]: "" });
     setData({ ...data, [e.target.name]: e.target.value });
@@ -43,8 +49,12 @@ const Table = () => {
     setData(initialData);
     setAddComplaint((comp) => !comp);
   };
-  const handleShow = () => setShow((show) => !show);
-
+  const handleShow = (message) => {
+    if(!show)
+      setMessage(message);
+    setShow((show) => !show);
+  }
+    
   const addComplaintHandler = async (e) => {
     e.preventDefault();
     const userId = JSON.parse(localStorage.getItem("user")).userId;
@@ -73,6 +83,7 @@ const Table = () => {
       setTimeout(() => {
         setPopup(false);
       }, 3000);
+      getComplaints();
     } else if(response["error"]["database"]){
       setAddComplaint(false);
       setData(initialData);
@@ -94,7 +105,7 @@ const Table = () => {
 
   return (
     <div className={show ? "t-container bdrop" : "t-container"}>
-      {show && <Message handleShow={handleShow} />}
+      {show && <Message content={message} handleShow={handleShow} />}
       {addComplaint && (
         <Complaint
           data={data}
@@ -133,21 +144,27 @@ const Table = () => {
               <th>Agent</th>
               <th>Status</th>
               <th>Message</th>
+              <th>Feedback</th>
             </tr>
           </thead>
           <tbody>
             {tableData.map((complaint,index)=>{
               return (
                 <tr>
-                  <td>{index}</td>
+                  <td>{index+1}</td>
                   <td>{complaint["subject"]}</td>
-                  <td>{complaint["date"]}</td>
-                  <td>{complaint["agent"]}</td>
+                  <td>{complaint["date"].slice(0,16)}</td>
+                  <td>{complaint["agent"] || "NA"}</td>
                   <td>
-                    <button className="status-a">{complaint["status"]==0?"Under Processing":"Completed"}</button>
+                    <button className={complaint["status"]==0?"status-n":"status-a"}>{complaint["status"]==0?"Under Processing":"Completed"}</button>
                   </td>
                   <td>
-                    <button className="msg" onClick={handleShow}>
+                    <button className="msg" onClick={()=>{handleShow(complaint["content"])}}>
+                      View
+                    </button>
+                  </td>
+                  <td>
+                    <button className="msg" onClick={()=>{handleShow(complaint["feedback"] || "No Feedback yet")}}>
                       View
                     </button>
                   </td>
