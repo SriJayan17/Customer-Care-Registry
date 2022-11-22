@@ -154,7 +154,7 @@ const Table = () => {
                   <td>{index+1}</td>
                   <td>{complaint["subject"]}</td>
                   <td>{complaint["date"].slice(0,16)}</td>
-                  <td>{complaint["agent"] || "NA"}</td>
+                  <td>{complaint["agentName"] || "NA"}</td>
                   <td>
                     <button className={complaint["status"]==0?"status-n":"status-a"}>{complaint["status"]==0?"Under Processing":"Completed"}</button>
                   </td>
@@ -173,6 +173,7 @@ const Table = () => {
             })}
           </tbody>
         </table>
+        {tableData.length==0 && <p className="prompt">No Records found</p>}
       </div>
     </div>
   );

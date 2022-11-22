@@ -1,25 +1,25 @@
 import React,{useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import Navbar from './Navbar'
-import AdminTable from './AdminTable'
+import {useNavigate} from "react-router-dom";
+import Navbar from "./Navbar"
+import AgentTable from "./AgentTable"
 
-const AdminDashboard = () => {
+const Agent = () => {
   const navigate = useNavigate();
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user"));
     if(user===null){
       navigate("/login");
     }else{
-      if(user["adminId"]===undefined)
+      if(user["agentId"]===undefined)
         navigate("/login");
     }
   }, [])
   return (
     <>
         <Navbar/>
-        <AdminTable />
+        <AgentTable/>
     </>
   )
 }
 
-export default AdminDashboard
+export default Agent

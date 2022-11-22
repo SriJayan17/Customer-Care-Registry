@@ -9,11 +9,10 @@ const AdminTable = () => {
   const [tableData,setTableData] = useState([]);
   const [message, setMessage] = useState("");
   const [agents,setAgents] = useState([]);
-
   const [compId, setCompId] = useState(0);
   const [selectedAgent, setSelectedAgent] = useState(-1);
-
   const [assign, setAssign] = useState(false);
+  const [submitError,setSubmitError] = useState(false);
 
   const getComplaints = async() => {
     const userId = JSON.parse(localStorage.getItem("user")).userId;
@@ -77,24 +76,31 @@ const AdminTable = () => {
     setAssign(false);
     if(response.status === 200) {
       getComplaints();
+      setSubmitError(false);
     } else {
+      setSubmitError(true);
       alert("Try again later");
     }
+    setPopup(true);
+    
+    setTimeout(()=>{
+      setPopup(false);
+    }, 3000);
   }
 
   return (
     <div className={show || assign ? "t-container bdrop" : "t-container"}>
       {show && <Message content={message} handleShow={handleShow} />}
       { assign && <DropDown handleAssign={handleAssign} agents={agents} submitAssign={submitAssign} selectedAgent={selectedAgent} setSelectedAgent={setSelectedAgent} /> }
-      {/* {popup && (
+      {popup && (
         <Popup
           content={
-            submitError ? "Sorry! Something went wrong" : "Complaint Added successfully"
+            submitError ? "Sorry! Something went wrong" : "Agent Assigned successfully"
           }
           type={submitError?"error":"success"}
           popupHandler = {popupHandler}
         />
-      )} */}
+      )}
       <div className="table-container">
         <div className="header">
           <div>
@@ -128,7 +134,7 @@ const AdminTable = () => {
                     }
                   </td>
                   <td>
-                    <button className="msg" onClick={()=>{handleShow(complaint["feedback"] || "No Feedback yet")}}>
+                    <button className="msg" onClick={()=>{handleShow(complaint["content"])}}>
                       View
                     </button>
                   </td>
@@ -137,6 +143,7 @@ const AdminTable = () => {
             })}
           </tbody>
         </table>
+        {tableData.length==0 && <p className="prompt">No Records found</p>}
       </div>
     </div>
   );

@@ -88,10 +88,28 @@ body {
   color: #fff;
 }
 
+.form-details .user-type{
+  margin:0.2rem 0;
+  padding:0.25rem;
+  width:100%;
+  font-size:1rem;
+  border-radius:3px;
+  outline:none;
+  border: 1px solid #bbb;
+  box-shadow: 1px 1px 2px #ccc;
+}
 p.error {
   color: crimson;
   font-size: 0.85rem;
   margin: 0.4rem 0;
+}
+
+p.prompt{
+  font-size: 1rem;
+  color: #888;
+  font-weight: bold;
+  margin: 2rem 0 0 0;
+  text-align: center;
 }
 
 .navbar {
@@ -367,4 +385,11 @@ p.error {
 
 .t-container .assignForm button {
   background-color: #2a9d8f;
+}
+
+.table-container table tr td .msg.green {
+  color: #2a9d8f;
+  border: 1px solid #2a9d8f;
+  background-color: #c9f6f1;
+  pointer-events: none;
 }

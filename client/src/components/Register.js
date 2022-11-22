@@ -7,6 +7,7 @@ const initialData = {
   email: "",
   password: "",
   mno: "",
+  type:1,
 };
 const initialError = {
   name: "",
@@ -24,10 +25,19 @@ const Register = () => {
   const changeHandler = (e) => {
     setErrorData({ ...errorData, [e.target.name]: "" });
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // console.log(formData);
   };
 
   const submitHandler = async (e) => {
+    
     e.preventDefault();
+
+    const fdata = formData;
+
+    if(fdata["type"]==='1' || fdata['type'] === 1)
+      fdata["type"] = 1;
+    else
+      fdata["type"] = 2;
 
     const response = await fetch("http://localhost:9090/register", {
       method: "POST",
@@ -35,7 +45,7 @@ const Register = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(fdata),
     });
 
     const data = await response.json();
@@ -44,7 +54,13 @@ const Register = () => {
       setErrorData(data.error);
     } else {
       setFormData(initialData);
-      navigate("/");
+      if(data["user"]["agentId"]){
+        navigate("/agent");
+        localStorage.setItem("user",JSON.stringify(data["user"]))  
+      }else{
+        navigate("/dashboard");
+        localStorage.setItem("user",JSON.stringify(data["user"]))  
+      }
     }
   };
   return (
@@ -97,6 +113,13 @@ const Register = () => {
               error: errorData.mno,
             }}
           ></Input>
+          <div className="form-details">
+            <label htmlFor="type">Type</label>
+            <select id="type" name="type" onChange={changeHandler} className="user-type">
+              <option value={1}>User</option>
+              <option value={2}>Agent</option>
+            </select>
+          </div>
           <button type="submit" onClick={submitHandler}>
             Register
           </button>

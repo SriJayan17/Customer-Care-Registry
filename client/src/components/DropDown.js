@@ -24,8 +24,5 @@ const DropDown = ({handleAssign, agents, submitAssign, selectedAgent, setSelecte
     </div>
   )
 }
-{/* <option value="Rajesh">Rajesh</option>
-              <option value="Sri Jayan">Sri Jayan</option>
-              <option value="Junaid">Junaid</option>
-              <option value="Ravi">Ravi</option> */}
+
 export default DropDown;

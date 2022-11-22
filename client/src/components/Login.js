@@ -41,7 +41,14 @@ const Login = () => {
       setErrorData(data.error);
     } else {
       setFormData(initialData);
-      navigate("/");
+      if(data["user"]["adminId"]){
+        navigate("/admin");  
+      }else if(data["user"]["agentId"]){
+        navigate("/agent");
+      }else{
+        navigate("/dashboard");
+      }
+      localStorage.setItem("user",JSON.stringify(data["user"]))  
     }
   };
 
@@ -50,7 +57,7 @@ const Login = () => {
       <div id="left-section"></div>
       <div id="right-section">
         <h2>Login Form</h2>
-        <form action="#" method="POST">
+        <form>
           <Input
             features={{
               type: "email",
