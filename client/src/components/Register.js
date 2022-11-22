@@ -7,7 +7,7 @@ const initialData = {
   email: "",
   password: "",
   mno: "",
-  type:1,
+  type: 1,
 };
 const initialError = {
   name: "",
@@ -29,15 +29,12 @@ const Register = () => {
   };
 
   const submitHandler = async (e) => {
-    
     e.preventDefault();
 
     const fdata = formData;
 
-    if(fdata["type"]==='1' || fdata['type'] === 1)
-      fdata["type"] = 1;
-    else
-      fdata["type"] = 2;
+    if (fdata["type"] == "1") fdata["type"] = 1;
+    else fdata["type"] = 2;
 
     const response = await fetch("http://localhost:9090/register", {
       method: "POST",
@@ -54,12 +51,12 @@ const Register = () => {
       setErrorData(data.error);
     } else {
       setFormData(initialData);
-      if(data["user"]["agentId"]){
+      if (data["user"]["agentId"]) {
         navigate("/agent");
-        localStorage.setItem("user",JSON.stringify(data["user"]))  
-      }else{
+        localStorage.setItem("user", JSON.stringify(data["user"]));
+      } else {
         navigate("/dashboard");
-        localStorage.setItem("user",JSON.stringify(data["user"]))  
+        localStorage.setItem("user", JSON.stringify(data["user"]));
       }
     }
   };
@@ -115,7 +112,12 @@ const Register = () => {
           ></Input>
           <div className="form-details">
             <label htmlFor="type">Type</label>
-            <select id="type" name="type" onChange={changeHandler} className="user-type">
+            <select
+              id="type"
+              name="type"
+              onChange={changeHandler}
+              className="user-type"
+            >
               <option value={1}>User</option>
               <option value={2}>Agent</option>
             </select>
@@ -125,7 +127,7 @@ const Register = () => {
           </button>
           <p>
             Already a user? &nbsp;
-            <Link to="/login">Login here</Link>
+            <Link to="/">Login here</Link>
           </p>
         </form>
       </div>

@@ -1,25 +1,24 @@
-import React,{useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import Navbar from './Navbar'
-import AdminTable from './AdminTable'
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+import AdminTable from "./AdminTable";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  useEffect(()=>{
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if(user===null){
-      navigate("/login");
-    }else{
-      if(user["adminId"]===undefined)
-        navigate("/login");
+    if (user === null) {
+      navigate("/");
+    } else {
+      if (user["adminId"] === undefined) navigate("/");
     }
-  }, [])
+  }, []);
   return (
     <>
-        <Navbar/>
-        <AdminTable />
+      <Navbar />
+      <AdminTable />
     </>
-  )
-}
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;

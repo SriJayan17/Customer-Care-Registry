@@ -1,12 +1,12 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const logoutHandler = ()=>{
+  const logoutHandler = () => {
     localStorage.removeItem("user");
-    navigate("/login");
-  }
+    navigate("/");
+  };
   return (
     <nav className="navbar">
       <h1 className="logo">Customer Care Registry</h1>
